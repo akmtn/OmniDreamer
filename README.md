@@ -1,4 +1,5 @@
-# Diverse Plausible 360-Degree Image Outpainting for Efficient 3DCG Background Creation (CVPR 2022)
+# Diverse Plausible 360-Degree Image Outpainting for Efficient 3DCG Background Creation
+CVPR 2022
 ![teaser](assets/teaser.png)
 
 [**Diverse Plausible 360-Degree Image Outpainting for Efficient 3DCG Background Creation**](https://akmtn.github.io/omni-dreamer/)<br/>
@@ -7,7 +8,7 @@
 [Yoshimitsu Aoki](https://aoki-medialab.jp/home-en/)<br/>
 
 
-[arXiv](http://arxiv.org/abs/2203.14668) | [BibTeX](#bibtex) | [Project Page](https://akmtn.github.io/omni-dreamer/)
+[arXiv](http://arxiv.org/abs/2203.14668) | [BibTeX](#bibtex) | [Project Page](https://akmtn.github.io/omni-dreamer/) | [Supp Video](https://www.youtube.com/watch?v=FxfudEt_Fds)
 
 ## Requirements
 A suitable [conda](https://conda.io/) environment named `omnidreamer` can be created
@@ -28,10 +29,8 @@ Please send us an email. We will send you the URL for downloading. You may distr
 - Comment out ckpt_path to VQGAN models from each `{*}-project.yaml`
 
 
-
-
-# Command examples
-## Images sampling for the comparison against 360IC
+## Command examples
+### Images sampling for the comparison against 360IC
 ```
 CUDA_VISIBLE_DEVICES=0 python sampling.py \
 --config_path logs/2021-07-27T05-57-41_sun360_basic_transformer/configs/2021-07-27T05-57-41-project.yaml \
@@ -41,7 +40,7 @@ CUDA_VISIBLE_DEVICES=0 python sampling.py \
 --outdir outputs/test
 ```
 
-## Images sampling for the comparison against SIG-SS
+### Images sampling for the comparison against SIG-SS
 ```
 CUDA_VISIBLE_DEVICES=0 python sampling.py \
 --config_path logs/2021-07-27T05-57-41_sun360_basic_transformer/configs/2021-07-27T05-57-41-project.yaml \
@@ -53,7 +52,7 @@ CUDA_VISIBLE_DEVICES=0 python sampling.py \
 ```
 
 
-## Images sampling for the comparison against EnvMapNet
+### Images sampling for the comparison against EnvMapNet
 ```
 CUDA_VISIBLE_DEVICES=0 python sampling.py \
 --config_path logs/2021-08-12T03-27-04_sun360_basic_transformer/configs/2021-08-12T03-27-04-project.yaml \
