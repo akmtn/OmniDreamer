@@ -1,0 +1,94 @@
+model:
+  base_learning_rate: 4.5e-06
+  target: taming.models.cond_transformer.Net2NetTransformer
+  params:
+    ckpt_path: logs/2021-08-17T07-36-02_sun360_basic_transformer/checkpoints/last.ckpt
+    cond_stage_key: concat_input
+    transformer_config:
+      target: taming.modules.transformer.mingpt.GPT
+      params:
+        vocab_size: 1024
+        block_size: 512 # default 512. When input 256x512(VQ: 16x32), 1024
+        n_layer: 24
+        n_head: 16
+        n_embd: 1024
+    first_stage_config:
+      target: taming.models.vqgan.VQModel
+      params:
+        ckpt_path: logs/2021-08-10T04-43-04_sun360_comp_vqgan/checkpoints/last.ckpt
+        embed_dim: 256
+        n_embed: 1024
+        image_key: image
+        concat_input: False 
+        completion: False
+        ddconfig:
+          double_z: false
+          z_channels: 256
+          resolution: 256
+          in_channels: 3
+          out_ch: 3
+          ch: 128
+          ch_mult:
+          - 1
+          - 1
+          - 2
+          - 2
+          - 4
+          num_res_blocks: 2
+          attn_resolutions:
+          - 16
+          dropout: 0.0
+        lossconfig:
+          target: taming.modules.losses.DummyLoss 
+    cond_stage_config:
+      target: taming.models.vqgan.VQModel
+      params:
+        ckpt_path: logs/2021-08-07T14-48-22_sun360_comp_vqgan/checkpoints/last.ckpt
+        embed_dim: 256
+        n_embed: 1024
+        image_key: concat_input
+        concat_input: True # important
+        completion: False
+        ddconfig:
+          double_z: false
+          z_channels: 256
+          resolution: 256
+          in_channels: 7
+          out_ch: 7
+          ch: 128
+          ch_mult:
+          - 1
+          - 1
+          - 2
+          - 2
+          - 4
+          num_res_blocks: 2
+          attn_resolutions:
+          - 16
+          dropout: 0.0
+        lossconfig:
+          target: taming.modules.losses.DummyLoss 
+
+data:
+  target: main.DataModuleFromConfig
+  params:
+    batch_size: 2
+    num_workers: 4
+    train:
+      target: taming.data.sun_comp.Sun360CompTrain
+      params:
+          size: 256
+          random_crop: True
+          coord: True
+          interpolation: area
+          no_crop: True
+          no_rescale: False
+    validation:
+      target: taming.data.sun_comp.Sun360CompValidation
+      params:
+          size: 256
+          random_crop: True # not center crop
+          coord: True
+          interpolation: area
+          no_crop: True
+          no_rescale: False

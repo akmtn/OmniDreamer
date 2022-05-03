@@ -1,0 +1,79 @@
+model:
+  base_learning_rate: 4.5e-6
+  target: taming.models.vqgan.NonVQModel # Using U-net
+  params: 
+    image_key: concat_input
+    refine_mode: True
+    embed_dim: 256
+    n_embed: 1024
+    concat_input: True
+    ddconfig:
+      double_z: False
+      z_channels: 256
+      resolution: 256
+      in_channels: 7 # masked image + completed image + binary_mask
+      out_ch: 3
+      ch: 128
+      ch_mult: [ 1,1,2,2,4]  # num_down = len(ch_mult)-1
+      num_res_blocks: 2
+      attn_resolutions: [16]
+      dropout: 0.0
+      
+    first_stage_config:
+      target: taming.models.vqgan.VQModel
+      params:
+        ckpt_path: logs/2021-08-11T09-58-41_sun360_comp_vqgan/checkpoints/last.ckpt
+        embed_dim: 256
+        n_embed: 1024
+        ddconfig:
+          double_z: false
+          z_channels: 256
+          resolution: 256
+          in_channels: 3
+          out_ch: 3
+          ch: 128
+          ch_mult:
+          - 1
+          - 1
+          - 2
+          - 2
+          - 4
+          num_res_blocks: 2
+          attn_resolutions:
+          - 16
+          dropout: 0.0
+        lossconfig:
+          target: taming.modules.losses.DummyLoss 
+
+    lossconfig:
+      target: taming.modules.losses.vqperceptual.VQLPIPSWithDiscriminator
+      params:
+        disc_conditional: False
+        disc_in_channels: 3
+        disc_start: 50001
+        disc_weight: 0.8
+        codebook_weight: 1.0
+
+data:
+  target: main.DataModuleFromConfig
+  params:
+    batch_size: 4
+    num_workers: 8
+    train:
+      target: taming.data.sun_comp.Sun360CompTrain
+      params:
+          size: 256
+          random_crop: True
+          coord: True
+          interpolation: area
+          no_crop: False
+          no_rescale: True
+    validation:
+      target: taming.data.sun_comp.Sun360CompValidation
+      params:
+          size: 256
+          random_crop: True
+          coord: True
+          interpolation: area
+          no_crop: False
+          no_rescale: True
