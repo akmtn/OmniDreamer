@@ -1,8 +1,8 @@
 # Diverse Plausible 360-Degree Image Outpainting for Efficient 3DCG Background Creation
-CVPR 2022
+
 ![teaser](assets/teaser.png)
 
-[**Diverse Plausible 360-Degree Image Outpainting for Efficient 3DCG Background Creation**](https://akmtn.github.io/omni-dreamer/)<br/>
+[**Diverse Plausible 360-Degree Image Outpainting for Efficient 3DCG Background Creation**](https://akmtn.github.io/omni-dreamer/) (CVPR 2022)<br/>
 [Naofumi Akimoto](https://akmtn.github.io/resume.pdf), 
 [Yuhi Matsuo](https://ishyuhi.github.io/ImsoHappyYuhi),
 [Yoshimitsu Aoki](https://aoki-medialab.jp/home-en/)<br/>
@@ -29,8 +29,8 @@ Please send us an email. We will send you the URL for downloading. You may distr
 - Comment out ckpt_path to VQGAN models from each `{*}-project.yaml`
 
 
-## Command examples
-### Images sampling for the comparison against 360IC
+## Inference examples
+### Sampling for a comparison against 360IC
 ```
 CUDA_VISIBLE_DEVICES=0 python sampling.py \
 --config_path logs/2021-07-27T05-57-41_sun360_basic_transformer/configs/2021-07-27T05-57-41-project.yaml \
@@ -40,7 +40,7 @@ CUDA_VISIBLE_DEVICES=0 python sampling.py \
 --outdir outputs/test
 ```
 
-### Images sampling for the comparison against SIG-SS
+### Sampling for a comparison against SIG-SS
 ```
 CUDA_VISIBLE_DEVICES=0 python sampling.py \
 --config_path logs/2021-07-27T05-57-41_sun360_basic_transformer/configs/2021-07-27T05-57-41-project.yaml \
@@ -52,7 +52,7 @@ CUDA_VISIBLE_DEVICES=0 python sampling.py \
 ```
 
 
-### Images sampling for the comparison against EnvMapNet
+### Sampling for a comparison against EnvMapNet
 ```
 CUDA_VISIBLE_DEVICES=0 python sampling.py \
 --config_path logs/2021-08-12T03-27-04_sun360_basic_transformer/configs/2021-08-12T03-27-04-project.yaml \
