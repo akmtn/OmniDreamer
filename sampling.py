@@ -99,12 +99,12 @@ def inference(args):
                 pass 
             else:
                 continue
-
-        elif num < args.imageidx:
-            continue
-        elif num > args.imageidx:
-            break # for debug
-        elif num == args.imageidx:
+        elif args.imageidx is not None:
+            if num < args.imageidx:
+                continue
+            elif num > args.imageidx:
+                break # for debug
+        elif args.imageidx is None or num == args.imageidx:
             for kloop in range(10): # How many outputs?
                 print(f"Running #{kloop} of {condition_img_path}")
 

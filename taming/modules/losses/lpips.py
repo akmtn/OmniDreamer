@@ -27,9 +27,9 @@ class LPIPS(nn.Module):
             param.requires_grad = False
         self.spherical_perceptual = spherical_perceptual
         if self.spherical_perceptual:
-            print(using spherical perceptual loss)
+            print("using spherical perceptual loss")
         else:
-            print(NOT using spherical perceptual loss)
+            print("NOT using spherical perceptual loss")
 
     def load_from_pretrained(self, name="vgg_lpips"):
         ckpt = get_ckpt_path(name, "taming/modules/autoencoder/lpips")

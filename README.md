@@ -26,7 +26,7 @@ Please send us an email. We will send you the URL for downloading. You may distr
 
 ## Running trained models
 - Put trained weights under `logs/`
-- Comment out ckpt_path to VQGAN models from each `{*}-project.yaml`
+- Comment out `ckpt_path` to VQGAN models from each `{*}-project.yaml`
 
 
 ## Inference examples

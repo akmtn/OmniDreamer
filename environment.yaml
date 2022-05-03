@@ -2,6 +2,7 @@ name: omnidreamer
 channels:
   - pytorch
   - defaults
+  - conda-forge
 dependencies:
   - python=3.8.5
   - pip=20.3
@@ -17,6 +18,6 @@ dependencies:
     - imageio-ffmpeg==0.4.2
     - pytorch-lightning==1.0.8
     - omegaconf==2.0.0
-    - test-tube=0.7.5
+    - test-tube==0.7.5
     - streamlit==0.86.0
     - -e .
