@@ -1,0 +1,8 @@
+logs/
+__pycahe__/
+*.egg-info/
+*.pyc
+*.pth
+outputs/
+cropped/
+.DS_Store
