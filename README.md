@@ -63,6 +63,41 @@ CUDA_VISIBLE_DEVICES=0 python sampling.py \
 --outdir outputs/test
 ```
 
+## Training
+We train the four networks separately (VQGAN_1, VQGAN_2, Transformer, and AdjustmentNet).  
+**Order of training**
+- For the training of the Transformer, trained VQGAN_1 and VQGAN_2 are required.
+- For the training of AdjustmentNet (RefineNet), trained VQGAN_2 is required.
+- Therefore, VQGAN_1 and VQGAN_2 can be trained in parallel, and Transformer and AdjustmentNet (RefineNet) can also be trained in parallel.
+
+**Sample Commands**
+- VQGAN_1  
+See `configs/sun360_comp_vqgan.yaml` for the details. Run it with `image_key: concat_input`, `concat_input: True`, `in_channels: 7`, and `out_ch: 7`.
+We trained 30 epochs totaly (only for transformer, 15).
+```
+CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES=0,1 python main.py --base configs/sun360_comp_vqgan.yaml -t True --gpus 0,1
+```
+
+- VQGAN_2  
+Use `configs/sun360_comp_vqgan.yaml` for VQGAN_2, that is the same configuration file, but set `image_key: image`, `concat_input: False`, `in_channels: 3`, and `out_ch: 3`.
+```
+CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES=0,1 python main.py --base configs/sun360_comp_vqgan.yaml -t True --gpus 0,1
+```
+
+- Transformer  
+Write the paths of the trained VQGAN_1 and VQGAN_2 in the yaml configuration file `configs/sun360_basic_transformer.yaml`.
+Even if you train VQGAN with 256x256 images before, you can train a transformer with 256x512. If using 256x512, set `block size: 1024`.
+```
+CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES=0,1 python main.py --base configs/sun360_basic_transformer.yaml -t True --gpus 0,1
+```
+
+- RefineNet(AdjustmentNet)  
+Write the paths of the trained VQGAN_2 in the yaml configuration file `configs/sun360_refine_net.yaml`.
+```
+CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES=0,1 python main.py --base configs/sun360_refine_net.yaml -t True --gpus 0,1
+```
+
+
 
 ## Development environment
 - Ubuntu 18.04

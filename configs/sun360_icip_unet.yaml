@@ -28,6 +28,7 @@ model:
         disc_start: 50001
         disc_weight: 0.8
         codebook_weight: 1.0
+        spherical_perceptual: False # True when using spherical_perceptual loss
 
 data:
   target: main.DataModuleFromConfig

@@ -2,20 +2,20 @@ model:
   base_learning_rate: 4.5e-06
   target: taming.models.cond_transformer.Net2NetTransformer
   params:
-    ckpt_path: logs/2021-08-17T07-36-02_sun360_basic_transformer/checkpoints/last.ckpt
+    # ckpt_path: logs/2021-08-17T07-36-02_sun360_basic_transformer/checkpoints/last.ckpt # set for resume
     cond_stage_key: concat_input
     transformer_config:
       target: taming.modules.transformer.mingpt.GPT
       params:
         vocab_size: 1024
-        block_size: 512 # default 512. When input 256x512(VQ: 16x32), 1024
+        block_size: 1024 # When input image is 256x256, set as 512. When input is 256x512(VQ: 16x32), set as 1024.
         n_layer: 24
         n_head: 16
         n_embd: 1024
     first_stage_config:
       target: taming.models.vqgan.VQModel
       params:
-        ckpt_path: logs/2021-08-10T04-43-04_sun360_comp_vqgan/checkpoints/last.ckpt
+        ckpt_path: logs/2021-08-10T04-43-04_sun360_comp_vqgan/checkpoints/last.ckpt # Set your trained VQGNA_2 model
         embed_dim: 256
         n_embed: 1024
         image_key: image
@@ -43,7 +43,7 @@ model:
     cond_stage_config:
       target: taming.models.vqgan.VQModel
       params:
-        ckpt_path: logs/2021-08-07T14-48-22_sun360_comp_vqgan/checkpoints/last.ckpt
+        ckpt_path: logs/2021-08-07T14-48-22_sun360_comp_vqgan/checkpoints/last.ckpt # Set your trained VQGAN_1 model
         embed_dim: 256
         n_embed: 1024
         image_key: concat_input

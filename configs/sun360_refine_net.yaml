@@ -22,7 +22,7 @@ model:
     first_stage_config:
       target: taming.models.vqgan.VQModel
       params:
-        ckpt_path: logs/2021-08-11T09-58-41_sun360_comp_vqgan/checkpoints/last.ckpt
+        ckpt_path: logs/2021-08-11T09-58-41_sun360_comp_vqgan/checkpoints/last.ckpt # Set your trained VQGAN_2 model
         embed_dim: 256
         n_embed: 1024
         ddconfig:
@@ -53,6 +53,7 @@ model:
         disc_start: 50001
         disc_weight: 0.8
         codebook_weight: 1.0
+        spherical_perceptual: False
 
 data:
   target: main.DataModuleFromConfig

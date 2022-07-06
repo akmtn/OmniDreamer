@@ -6,13 +6,13 @@ model:
     embed_dim: 256
     n_embed: 1024
     concat_input: True # True when VQGAN_1(condition-stage), False when VQGAN_2
-    completion: False # Switch to True if you train vqgan with completion.
+    completion: False # Switch to True if you train vqgan with completion. False for our paper setting.
     ddconfig:
       double_z: False
       z_channels: 256
       resolution: 256
-      in_channels: 7 # ch of concat_input: image + coord + binary_mask
-      out_ch: 7
+      in_channels: 7 # ch of concat_input: image + coord + binary_mask. Set as 7 when VQGAN_1(condition-stage), 3 when VQGAN_2
+      out_ch: 7 # Set as 7 when VQGAN_1(condition-stage), 3 when VQGAN_2
       ch: 128
       ch_mult: [ 1,1,2,2,4]  # num_down = len(ch_mult)-1
       num_res_blocks: 2
@@ -27,6 +27,7 @@ model:
         disc_start: 50001
         disc_weight: 0.8
         codebook_weight: 1.0
+        spherical_perceptual: True
 
 data:
   target: main.DataModuleFromConfig
