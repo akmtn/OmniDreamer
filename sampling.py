@@ -225,10 +225,10 @@ def inference(args):
                         if step%update_every==0 or step==z_code_shape[2]*z_code_shape[3]-1:
                             pass
                 
-                # copy to other side
-                if circular_type ==1:
-                    idx[:,:,:px] = idx[:,:,-2*px:-px]
-                    idx[:,:,-px:] = idx[:,:,px:2*px] 
+                    # copy to other side
+                    if circular_type ==1:
+                        idx[:,:,:px] = idx[:,:,-2*px:-px]
+                        idx[:,:,-px:] = idx[:,:,px:2*px] 
 
                 #idx = torch.cat((idx[:,:,16:], idx[:,:,:16]),2) #lr_replace
 
